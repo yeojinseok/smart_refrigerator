@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import lobbyGlb from './images/test.png'
+import lobbyGlb from './assets/ref.glb'
 
 const roomList = [
   'https://imetanium.com/FZQo5VB?hub_invite_id=pK99jMn',
@@ -30,11 +30,11 @@ export function Render(
     0.1,
     1000
   )
-  camera.position.y = 40.5
-  camera.position.z = 60
-  camera.position.x = 10
+  // camera.position.y = 40.5
+  // camera.position.z = 60
+  // camera.position.x = 10
   camera.rotation.x = -0.7
-  camera.position.set(0, 50, 70)
+  camera.position.set(0, 90, 210)
   scene.add(camera)
 
   // Render
@@ -51,35 +51,56 @@ export function Render(
 
   // Light
 
-  const ambientLight = new THREE.AmbientLight('white', 30)
+  // const ambientLight = new THREE.AmbientLight('white', 30)
+  // scene.add(ambientLight)
+
+  // const directionalLight = new THREE.DirectionalLight('white', 30)
+  // directionalLight.position.x = 1
+
+  // directionalLight.position.y = 20
+
+  // // directionalLight.rotateZ = 100
+
+  // // scene.add(directionalLight)
+  // Light
+  const ambientLight = new THREE.AmbientLight('white', 0.5)
   scene.add(ambientLight)
 
-  const directionalLight = new THREE.DirectionalLight('white', 30)
-  directionalLight.position.x = 1
+  const light = new THREE.PointLight('white', 1, 100, 2)
+  light.position.x = 15
+  light.position.y = 110
+  light.position.z = 35
+  scene.add(light)
 
-  directionalLight.position.y = 20
+  // const lightHelper = new THREE.PointLightHelper(light)
+  // scene.add(lightHelper)
 
-  // directionalLight.rotateZ = 100
-
-  scene.add(directionalLight)
+  // 그림자 설정
+  // light.castShadow = true
+  // light.shadow.mapSize.width = 1024 // 기본값 512
+  // light.shadow.mapSize.height = 1024
+  // light.shadow.camera.near = 1
+  // light.shadow.camera.far = 30
+  // light.shadow.radius = 15; // 기본값인 THREE.PCFShadowMap에서만 적용
 
   const gltfLoader = new GLTFLoader()
 
   // let mixer;
   let meshes: THREE.Object3D<THREE.Event>[]
-  gltfLoader.load('./assets/refrigeater.glb', gltf => {
-    console.log(gltf.scene.children[0])
+  gltfLoader.load(lobbyGlb, gltf => {
+    console.log(gltf)
     const glbmodel = gltf.scene
-    scene.add(glbmodel)
+    scene.add(gltf.scene)
     meshes = gltf.scene.children
     // console.log(meshes);
+
     setLoading(true)
   })
 
   // mouse controller
 
   const controls = new OrbitControls(camera, renderer.domElement)
-  controls.maxDistance = 170
+  controls.maxDistance = 300
   controls.minDistance = 50
   // controls.enableRotate = false;
   controls.enableDamping = true
@@ -100,7 +121,7 @@ export function Render(
 
     const intersects = raycaster.intersectObjects(meshes)
     if (intersects[0]) {
-      // console.log(intersects[0].object.name);
+      console.log(intersects[0].object.name)
       if (intersects[0].object.name.includes('CEO_Room')) {
         window.open(roomList[0], '_self')
       } else if (intersects[0].object.name.includes('Meeting_Room')) {

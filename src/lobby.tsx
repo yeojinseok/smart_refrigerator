@@ -8,8 +8,8 @@ import { Render } from './Render'
 
 const Wrap = styled.div`
   position: relative;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vh;
   min-width: 992px;
   background-color: black;
   overflow: hidden;
