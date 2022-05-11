@@ -7,14 +7,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import lobbyGlb from './assets/ref.glb'
 
-const roomList = [
-  'https://imetanium.com/FZQo5VB?hub_invite_id=pK99jMn',
-  'https://imetanium.com/sYQhQiJ/downright-striking-tract',
-  'https://imetanium.com/gs5EFQi/primary-loud-commons',
-  'https://imetanium.com/JqBya6N/gripping-elliptical-barbecue',
-  'https://imetanium.com/JJRJVTe/uniform-splendid-park',
-]
-
 export function Render(
   canvasRef: any,
   setLoading: { (value: SetStateAction<boolean>): void; (arg0: boolean): void }
@@ -122,28 +114,15 @@ export function Render(
     const intersects = raycaster.intersectObjects(meshes)
     if (intersects[0]) {
       console.log(intersects[0].object.name)
-      if (intersects[0].object.name.includes('CEO_Room')) {
-        window.open(roomList[0], '_self')
-      } else if (intersects[0].object.name.includes('Meeting_Room')) {
-        window.open(roomList[1], '_self')
-      } else if (intersects[0].object.name.includes('Corporate_PR_office')) {
-        window.open(roomList[2], '_self')
-      } else if (intersects[0].object.name.includes('IR_Room')) {
-        window.open(roomList[3], '_self')
-      } else if (
-        intersects[0].object.name.includes('Social_Contribution_Room')
-      ) {
-        window.open(roomList[4], '_self')
-      } else if (intersects[0].object.name.includes('텍스트')) {
-        window.open(roomList[4], '_self')
-      }
     }
   }
 
   const clock = new THREE.Clock()
+  let x = 0.05
   const animate = function () {
     controls.update()
     const delta = clock.getDelta()
+    camera.position.set(0, 90, 210)
     renderer.render(scene, camera)
     renderer.setAnimationLoop(animate)
   }

@@ -9,7 +9,7 @@ export default function Router() {
   return (
     <>
       <BrowserRouter>
-        {/* <Header /> */}
+        <Header />
         <Routes>
           <Route path="/" element={<Lobby></Lobby>} />
         </Routes>
