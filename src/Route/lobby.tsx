@@ -3,7 +3,7 @@ import React from 'react'
 
 import styled from 'styled-components'
 import { motion, useAnimation } from 'framer-motion'
-import { Render } from './Render'
+import { Render } from '../Components/Render'
 // import { HelperContainer } from './HelperContainer'
 
 const Wrap = styled.div`

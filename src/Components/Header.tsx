@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import styled from 'styled-components'
 import React from 'react'
 import { useMatch, Link } from 'react-router-dom'
+import { Button } from '../Layout/Button'
 
 // import Logo from "../assets/svg/logo.svg";
 const Nav = styled(motion.nav)`
@@ -82,6 +83,7 @@ function Header() {
       <Column isActive={informationMatch !== null}>
         <Link to="/metanium/information/manual">이용 안내</Link>
       </Column>
+      {/* <Button> dfdf</Button> */}
     </Nav>
   )
 }
