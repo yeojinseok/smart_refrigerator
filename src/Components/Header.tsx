@@ -10,23 +10,14 @@ const Nav = styled(motion.nav)`
   justify-content: space-between;
   align-items: center;
   position: fixed;
-  width: 100%;
+  width: 1280px;
   top: 0;
   font-size: 14px;
   padding: 20px 60px;
-  color: white;
-  background-color: ${props => props.theme.accentBgColor};
-`
-
-const Title = styled(motion.div)`
-  display: flex;
-  align-items: center;
-  justify-content: left;
   color: ${props => props.theme.textColor};
-`
-const Svg = styled(motion.svg)``
-const LogoText = styled.span`
-  font-size: 24px;
+  background-color: ${props => props.theme.bgColor};
+  margin: 0 auto;
+  z-index: 10;
 `
 
 const Column = styled(motion.div)<{ isActive: boolean }>`
@@ -47,14 +38,15 @@ const hoverVariants = {
   hover: {
     scale: 1.02,
     color: 'rgb(153,153,153)',
+    backgroundColor: 'rgb(51,51,51)',
   },
 }
 
 function Header() {
   const mypageMatch = useMatch('/')
-  const signinMatch = useMatch('/metanium/signin')
-  const informationMatch = useMatch('/metanium/information')
-  const homeMatch = useMatch('/metanium/home')
+  const signinMatch = useMatch('/signin')
+  const informationMatch = useMatch('/information')
+  const homeMatch = useMatch('/home')
 
   console.log(homeMatch, mypageMatch)
   return (
@@ -71,19 +63,18 @@ function Header() {
         whileHover="hover"
         isActive={signinMatch !== null}
       >
-        <Link to="/metanium/signin">회원가입/로그인</Link>
+        <Link to="/signin">회원가입/로그인</Link>
       </Column>
       <Column
         variants={hoverVariants}
         whileHover="hover"
         isActive={mypageMatch !== null}
       >
-        <Link to="/metanium/mypage/account">마이페이지</Link>
+        <Link to="/mypage/account">마이페이지</Link>
       </Column>
       <Column isActive={informationMatch !== null}>
-        <Link to="/metanium/information/manual">이용 안내</Link>
+        <Link to="/information/manual">이용 안내</Link>
       </Column>
-      {/* <Button> dfdf</Button> */}
     </Nav>
   )
 }

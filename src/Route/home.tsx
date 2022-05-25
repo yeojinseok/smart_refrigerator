@@ -1,6 +1,13 @@
-import React from "react";
-export default function Home(){
-    return (<>
-        <h1>hihi</h1>
-    </>)
+import React from 'react'
+import { SigninContainer } from '../Components/SigninContainer'
+import { Wrapper } from '../Layout/DefaultLayout'
+import Lobby from './lobby'
+export default function Home() {
+  return (
+    <>
+      <Wrapper>
+        <Lobby></Lobby>
+      </Wrapper>
+    </>
+  )
 }

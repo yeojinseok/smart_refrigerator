@@ -4,15 +4,29 @@ import Header from './Components/Header'
 import Lobby from './Route/lobby'
 
 import Home from './Route/home'
+import { Signin } from './Route/signin'
 
+const Wrap = styled.div`
+  padding-top: 30px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+`
 export default function Router() {
   return (
     <>
       <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Lobby></Lobby>} />
-        </Routes>
+        <Wrap>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home></Home>} />
+            <Route path="/signin" element={<Signin></Signin>} />
+            <Route path="/signup" element={<Lobby></Lobby>} />
+            <Route path="/mypage" element={<Lobby></Lobby>} />
+            <Route path="/information" element={<Lobby></Lobby>} />
+          </Routes>
+        </Wrap>
       </BrowserRouter>
     </>
   )
