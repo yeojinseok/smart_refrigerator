@@ -5,7 +5,8 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import lobbyGlb from '../assets/.glb'
+import lobbyGlb from '../assets/room.glb'
+import { Controller } from '../controller';
 
 export function Render(
   canvasRef: any,
@@ -65,6 +66,8 @@ export function Render(
   light.position.z = 35
   scene.add(light)
 
+
+
   // const lightHelper = new THREE.PointLightHelper(light)
   // scene.add(lightHelper)
 
@@ -77,7 +80,8 @@ export function Render(
   // light.shadow.radius = 15; // 기본값인 THREE.PCFShadowMap에서만 적용
 
   const gltfLoader = new GLTFLoader()
-
+	let mixer: THREE.AnimationMixer;
+	let actions: (any)[]= [];
   // let mixer;
   let meshes: THREE.Object3D<THREE.Event>[]
   gltfLoader.load(lobbyGlb, gltf => {
@@ -85,10 +89,31 @@ export function Render(
     const glbmodel = gltf.scene
     scene.add(gltf.scene)
     meshes = gltf.scene.children
+    mixer = new THREE.AnimationMixer(glbmodel);
+
+    actions[0] = mixer.clipAction(gltf.animations[2]);
+    actions[1] = mixer.clipAction(gltf.animations[1]);
+    actions[0].clampWhenFinished = true;
+    actions[1].clampWhenFinished = true;
     // console.log(meshes);
 
     setLoading(true)
   })
+
+  function doorController(){
+		if(Controller()){
+			console.log(123);
+			actions[1].stop()
+			actions[0].repetitions=1;
+			actions[0].play();
+		}else if(Controller()){
+			console.log(actions);
+			actions[0].stop()
+			actions[1].repetitions=1;
+			actions[1].play();
+		}
+	}
+
 
   // mouse controller
 
@@ -122,7 +147,9 @@ export function Render(
   let x = 0.05
   const animate = function () {
     controls.update()
-    const delta = clock.getDelta()
+    const delta = clock.getDelta();
+		doorController();
+			if (mixer) mixer.update(delta);
     // camera.position.set(0, 90, 210)
     renderer.render(scene, camera)
     renderer.setAnimationLoop(animate)
