@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import lobbyGlb from '../assets/ref.glb'
+import lobbyGlb from '../assets/.glb'
 
 export function Render(
   canvasRef: any,
@@ -34,6 +34,7 @@ export function Render(
     antialias: true,
     alpha: true,
   })
+  renderer.setClearColor('white')
   renderer.setSize(
     canvasRef.current.clientWidth,
     canvasRef.current.clientHeight
@@ -92,17 +93,17 @@ export function Render(
   // mouse controller
 
   const controls = new OrbitControls(camera, renderer.domElement)
-  controls.maxDistance = 300
+  controls.maxDistance = 800
   controls.minDistance = 50
   // controls.enableRotate = false;
   controls.enableDamping = true
-  controls.minPolarAngle = Math.PI / 6 // 수직
-  controls.maxPolarAngle = Math.PI / 2
+  // controls.minPolarAngle = Math.PI / 6 // 수직
+  // controls.maxPolarAngle = Math.PI / 2
   controls.enablePan = false
 
   //     수평
-  controls.minAzimuthAngle = -Math.PI / 2
-  controls.maxAzimuthAngle = Math.PI / 2
+  // controls.minAzimuthAngle = -Math.PI / 2
+  // controls.maxAzimuthAngle = Math.PI / 2
   // controls.minAzimuthAngle =
 
   const raycaster = new THREE.Raycaster()
@@ -122,7 +123,7 @@ export function Render(
   const animate = function () {
     controls.update()
     const delta = clock.getDelta()
-    camera.position.set(0, 90, 210)
+    // camera.position.set(0, 90, 210)
     renderer.render(scene, camera)
     renderer.setAnimationLoop(animate)
   }

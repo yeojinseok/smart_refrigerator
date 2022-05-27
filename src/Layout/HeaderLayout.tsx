@@ -4,12 +4,12 @@ import { theme } from './theme'
 
 export const WhiteButton = styled(motion.button)`
   font: normal normal bold 16px/24px Noto Sans CJK KR;
-  width: 280px;
+  width: 240px;
   height: 60px;
   margin: 10px 0px;
   border-radius: 20px;
-  background-color: ${theme.button2.bgColor};
-  color: ${theme.button2.textColor};
+  background-color: ${theme.button.bgColor};
+  color: ${theme.button.textColor};
   border: 1px solid #cccccc;
 `
 export const WhiteButtonVariants = {

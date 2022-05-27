@@ -22,9 +22,9 @@ export default function Router() {
           <Routes>
             <Route path="/" element={<Home></Home>} />
             <Route path="/signin" element={<Signin></Signin>} />
-            <Route path="/signup" element={<Lobby></Lobby>} />
-            <Route path="/mypage" element={<Lobby></Lobby>} />
-            <Route path="/information" element={<Lobby></Lobby>} />
+            <Route path="/signup" element={<Signin></Signin>} />
+            <Route path="/mypage" element={<Signin></Signin>} />
+            <Route path="/information" element={<Signin></Signin>} />
           </Routes>
         </Wrap>
       </BrowserRouter>

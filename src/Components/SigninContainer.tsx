@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
 import { CunstomInput, PwdInput } from '../Layout/Input'
 import { useEffect, useRef, useState } from 'react'
+import { Button } from '../Layout/Button'
 const LoginWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -82,7 +83,7 @@ export function SigninContainer() {
             onChange={handlePwd}
             placeholder="비밀번호 입력"
           />
-
+          <Button color="black"> 버튼</Button>
           {/* <PwdInput
             onFocus={e => setError(false)}
             onBlur={checkPwd}

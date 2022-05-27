@@ -8,8 +8,8 @@ export const WhiteButton = styled(motion.button)`
   height: 60px;
   margin: 10px 0px;
   border-radius: 20px;
-  background-color: ${theme.button2.bgColor};
-  color: ${theme.button2.textColor};
+  background-color: ${theme.button.bgColor};
+  color: ${theme.button.textColor};
   border: 1px solid #cccccc;
 `
 export const WhiteButtonVariants = {

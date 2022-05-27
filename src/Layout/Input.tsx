@@ -5,25 +5,6 @@ import PwdViewIcon from '../assets/ico_view_grey_24_hs.png'
 import PwdUnViewIcon from '../assets/ico_unview_grey_24_hs.png'
 import { InputInterface } from '../TpyeInterface/Interface'
 
-const InputTag = styled(motion.input)`
-  width: 280px;
-  height: 60px;
-  border-radius: 5px;
-  margin: 10px 0px;
-  border-radius: 20px;
-  padding-left: 10px;
-  border: 1px solid #cccccc;
-  &:hover {
-    border-color: #000000;
-  }
-`
-
-const hoverVariants = {
-  hover: {
-    scale: 1.05,
-  },
-}
-
 const InputContainer = styled(motion.div)`
   width: 240px;
   height: 55px;
