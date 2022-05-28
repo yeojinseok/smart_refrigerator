@@ -1,49 +1,30 @@
-import { RefObject, SetStateAction } from 'react'
+import { RefObject, SetStateAction, useState } from 'react'
 import * as THREE from 'three'
+
 // import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.117.1/build/three.module.js'
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import lobbyGlb from '../assets/room.glb'
-import { Controller } from './Controller'
+import { CameraController } from '../threejsComponent/Camera'
+import { RenderController } from '../threejsComponent/Render'
 
 export function Render(
-  canvasRef: any,
-  setLoading: { (value: SetStateAction<boolean>): void; (arg0: boolean): void }
+  canvasRef: any
 ) {
-  console.log(canvasRef)
+
+
+
   //Scene
   const scene = new THREE.Scene()
-
   // Camera
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    canvasRef.current.clientWidth / canvasRef.current.clientHeight,
-    0.1,
-    1000
-  )
-  // camera.position.y = 40.5
-  // camera.position.z = 60
-  // camera.position.x = 10
-  camera.rotation.x = -0.7
-  camera.position.set(0, 90, 210)
-  scene.add(camera)
-
+  const camera= CameraController(canvasRef,scene)
   // Render
-  const renderer = new THREE.WebGLRenderer({
-    antialias: true,
-    alpha: true,
-  })
-  renderer.setClearColor('white')
-  renderer.setSize(
-    canvasRef.current.clientWidth,
-    canvasRef.current.clientHeight
-  )
-  renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1)
-  canvasRef.current.appendChild(renderer.domElement)
+  const renderer= RenderController(canvasRef)
+  let doorController=false
 
-  // Light
+  // Light```
 
   // const ambientLight = new THREE.AmbientLight('white', 30)
   // scene.add(ambientLight)
@@ -77,6 +58,7 @@ export function Render(
   // light.shadow.camera.far = 30
   // light.shadow.radius = 15; // 기본값인 THREE.PCFShadowMap에서만 적용
 
+
   const gltfLoader = new GLTFLoader()
   let mixer: THREE.AnimationMixer
   let actions: any[] = []
@@ -95,22 +77,19 @@ export function Render(
     actions[1].clampWhenFinished = true
     // console.log(meshes);
 
-    setLoading(true)
   })
 
-  function doorController() {
-    if (Controller() === 'KeyW') {
-      console.log(123)
-      actions[1].stop()
-      actions[0].repetitions = 1
-      actions[0].play()
-    } else if (Controller() === 'KeyE') {
-      console.log(actions)
-      actions[0].stop()
-      actions[1].repetitions = 1
-      actions[1].play()
-    }
-  }
+  // function doorController() {
+  //   if (Controller() === 'KeyW') {
+  //     console.log(123)
+  //     actions[1].stop()
+  //     actions[0].repetitions = 1
+  //     actions[0].play()
+  //   } else if (Controller() === 'KeyE') {
+  //     console.log(actions)
+
+  //   }
+  // }
 
   // mouse controller
 
@@ -137,6 +116,21 @@ export function Render(
     const intersects = raycaster.intersectObjects(meshes)
     if (intersects[0]) {
       console.log(intersects[0].object.name)
+      if(intersects[0].object.name.includes("평면")){
+        if(doorController){
+          actions[1].stop()
+          actions[0].repetitions = 1
+          actions[0].play()
+          doorController = false
+          console.log(doorController)
+        }else{
+          actions[0].stop()
+          actions[1].repetitions = 1
+          actions[1].play()
+          doorController = true
+          console.log(doorController)
+        }
+      }
     }
   }
 
@@ -145,7 +139,7 @@ export function Render(
   const animate = function () {
     controls.update()
     const delta = clock.getDelta()
-    doorController()
+
     if (mixer) mixer.update(delta)
     // camera.position.set(0, 90, 210)
     renderer.render(scene, camera)
@@ -176,5 +170,5 @@ export function Render(
 
   animate()
 
-  return () => canvasRef.current.removeChild(renderer.domElement)
+  // return () => canvasRef.current.removeChild(renderer.domElement)
 }

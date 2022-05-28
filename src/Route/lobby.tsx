@@ -1,6 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import React from 'react'
+import * as THREE from 'three'
 
+// import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.117.1/build/three.module.js'
+
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import lobbyGlb from '../assets/room.glb'
+import { CameraController } from '../threejsComponent/Camera'
+import { RenderController } from '../threejsComponent/Render'
 import styled from 'styled-components'
 import { motion, useAnimation } from 'framer-motion'
 import { Render } from '../Components/Render'
@@ -25,6 +34,7 @@ const ViewPort = styled.div`
 const Lobby = () => {
   const inputAnimation = useAnimation()
 
+
   const toggleShow = () => {
     if (show) {
       inputAnimation.start({
@@ -38,14 +48,19 @@ const Lobby = () => {
 
   const canvasRef = useRef<HTMLDivElement>(null)
   const [show, setShow] = useState<boolean>(false)
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
+
+
+
+  // Camera
+
   useEffect(() => {
-    Render(canvasRef, setLoading)
-  }, [])
+   Render(canvasRef)
+  }, []);
 
   return (
     <Wrap>
-      <ViewPort ref={canvasRef} />;{loading && <></>}
+      <ViewPort ref={canvasRef} />;
     </Wrap>
   )
 }

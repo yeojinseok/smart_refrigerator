@@ -9,9 +9,9 @@ const InputContainer = styled(motion.div)`
   width: 240px;
   height: 55px;
   max-height: 55px;
-  margin: 10px 0px;
 
-  border-radius: 20px;
+
+  border-radius: 5px;
   padding: 10px;
   border: 1px solid #cccccc;
   display: flex;

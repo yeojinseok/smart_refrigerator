@@ -35,11 +35,11 @@ const ButtonLayout = styled(motion.button)<ButtonLayoutInterface>`
   font: normal normal bold 16px/24px Noto Sans CJK KR;
   width: ${props => (props.width ? `${props.width} ` : '240px;')};
   height: 60px;
-  border-radius: 20px;
+  border-radius: 5px;
   background-color: ${props => props.bgColor};
   color: ${props => props.textColor};
   border: 1px solid #cccccc;
-  margin: 10px;
+  margin: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
