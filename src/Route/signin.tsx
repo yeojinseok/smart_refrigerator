@@ -1,4 +1,5 @@
 import { SigninContainer } from '../Components/SigninContainer'
+import { SignUpContainer } from '../Components/SignupContainer'
 
 const onSubmita = (event: React.FormEvent<HTMLFormElement>) => {
   console.log('비밀번호가짧아')
@@ -10,5 +11,5 @@ const onSubmita = (event: React.FormEvent<HTMLFormElement>) => {
 //   return <SigninContainer onSubmit={onSubmita}></SigninContainer>
 // }
 export function Signin() {
-  return <SigninContainer></SigninContainer>
+  return <SignUpContainer></SignUpContainer>
 }

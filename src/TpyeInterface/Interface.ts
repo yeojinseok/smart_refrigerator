@@ -13,4 +13,5 @@ export interface InputInterface {
   value?: string
   placeholder?: string
   onBlur?: any
+  register: any
 }

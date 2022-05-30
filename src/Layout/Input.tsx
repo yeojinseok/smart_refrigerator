@@ -10,7 +10,6 @@ const InputContainer = styled(motion.div)`
   height: 55px;
   max-height: 55px;
 
-
   border-radius: 5px;
   padding: 10px;
   border: 1px solid #cccccc;
@@ -42,6 +41,7 @@ export function PwdInput({
   value,
   placeholder,
   onBlur,
+  register,
 }: InputInterface) {
   const [passwordType, setPasswordType] = useState({
     type: 'password',
@@ -60,6 +60,7 @@ export function PwdInput({
   return (
     <>
       <InputContainer
+        {...register('Email')}
         ref={refs}
         transition={{ type: 'tween' }}
         whileHover="hover"
