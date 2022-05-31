@@ -1,27 +1,35 @@
-const API_KEY = '10923b261ba94d897ac6b81148314a3f'
-const BASE_PATH = 'https://api.themoviedb.org/3'
+// const API_KEY = '10923b261ba94d897ac6b81148314a3f'
+const BASE_PATH = process.env.REACT_APP_SERVER
 
-interface IMovie {
-  id: number
-  backdrop_path: string
-  poster_path: string
-  title: string
-  overview: string
+interface SignupInterface {
+  id: string
+  name: string
+  password: string
 }
 
-export interface IGetMoviesResult {
-  dates: {
-    maximum: string
-    minimum: string
-  }
-  page: number
-  results: IMovie[]
-  total_pages: number
-  total_results: number
-}
+// export interface IGetMoviesResult {
+//   dates: {
+//     maximum: string
+//     minimum: string
+//   }
+//   page: number
+//   results: IMovie[]
+//   total_pages: number
+//   total_results: number
+// }
 
-export function getMovies() {
-  return fetch(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}`).then(
-    response => response.json()
-  )
+export function SignupApi(data: SignupInterface) {
+  const response = fetch(`${BASE_PATH}/auth/signup`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: data.id,
+      password: data.password,
+      name: data.name,
+    }),
+  }).then(response => response.json())
+
+  return response
 }

@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { CunstomInput, PwdInput } from '../Layout/Input'
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '../Layout/Button'
+import { Link } from 'react-router-dom'
 const LoginWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -44,7 +45,8 @@ export function SigninContainer() {
             onChange={handlePwd}
             placeholder="비밀번호 입력"
           />
-          <Button color="black"> 버튼</Button>
+          <Button color="black"> 로그인</Button>
+          <Link to="/signup">회원가입</Link>
         </LoginContainer>
       </LoginWrapper>
     </>

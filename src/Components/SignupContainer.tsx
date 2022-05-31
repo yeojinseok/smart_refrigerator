@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
 import { CunstomInput, PwdInput } from '../Layout/Input'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Button } from '../Layout/Button'
+import { SignupApi } from '../api'
 const LoginWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -15,91 +16,80 @@ const LoginContainer = styled.div`
   align-items: center;
   justify-content: center;
   color: black;
+  div {
+    margin-top: 20px;
+  }
 `
-
-// const { register, handleSubmit } = useForm<IForm>()
-
-// const onValid = (data: IForm) => {
-//   history.push(`/search?keyword=${data.keyword}`)
-// }
-
+const ErrorMessage = styled.span`
+  margin-top: 10px;
+  color: red;
+`
 export function SignUpContainer() {
-  const { register, watch, handleSubmit } = useForm()
-  const onValid = (data: any) => {
-    console.log(data)
-  }
-  console.log(watch())
-  const [pwd, setPwd] = useState('')
-  const [confirmPwd, setConfirmPwd] = useState('')
-  const [error, setError] = useState(false)
-  const [message, setMessage] = useState('')
+  const {
+    register,
+    watch,
+    setError,
+    setValue,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({ mode: 'onBlur' })
+  // console.log(watch())
 
-  const checkPwd = () => {
-    console.log('check', pwd, confirmPwd)
-    if (pwd == confirmPwd) {
-      setError(false)
+  const Pwd = useRef({})
+  Pwd.current = watch('password', '')
+
+  const onValid = async (data: any) => {
+    const result = await SignupApi(data)
+    console.log('결과', result)
+    if (result.result === 'success') {
+      window.location.replace('/signin')
     } else {
-      setError(true)
+      alert('popup')
     }
   }
-
-  const inputRef = useRef<HTMLDivElement>(null)
-
-  const handleClickOutSide = (e: any) => {
-    if (inputRef) {
-      if (!inputRef.current.contains(e.target)) checkPwd()
-      else {
-        setError(false)
-      }
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutSide)
-  })
-
-  function handlePwd(e: React.FormEvent<HTMLInputElement>) {
-    const {
-      currentTarget: { value },
-    } = e
-    setPwd(value)
-  }
-  function handleConfirmPwd(e: React.FormEvent<HTMLInputElement>) {
-    const {
-      currentTarget: { value },
-    } = e
-    setConfirmPwd(value)
-  }
-
-  useEffect(() => {
-    if (error) {
-      setMessage('비밀번호가 같지 않습니다.')
-    } else {
-      setMessage('')
-    }
-  }, [error])
   return (
     <>
       <LoginWrapper>
         <form onSubmit={handleSubmit(onValid)}>
           <LoginContainer>
+            <CunstomInput
+              register={register('id', {
+                required: 'write here',
+              })}
+              placeholder="아이디 입력"
+            ></CunstomInput>
+            <CunstomInput
+              register={register('name', {
+                required: 'write here',
+              })}
+              placeholder="이름"
+            ></CunstomInput>
             <PwdInput
-              register={register}
-              value={pwd}
-              onChange={handlePwd}
+              register={register('password', {
+                required: 'write here',
+              })}
               placeholder="비밀번호 입력"
             />
-            <Button color="black"> 버튼</Button>
+            <ErrorMessage>
+              <span>{errors?.Pwd?.message}</span>
+            </ErrorMessage>
+
             <PwdInput
-              register={register}
-              onFocus={e => setError(false)}
-              onBlur={checkPwd}
-              refs={inputRef}
-              value={confirmPwd}
-              onChange={handleConfirmPwd}
+              register={register('ConfirmPwd', {
+                required: 'write here',
+                validate: value =>
+                  value === Pwd.current || 'The passwords do not match',
+              })}
+              // onFocus={e => setpwdError(false)}
+              // onBlur={checkPwd}
+              // value={confirmPwd}
+              // onChange={handleConfirmPwd}
               placeholder="비밀번호 확인"
             />
-            {message}
+            <ErrorMessage>
+              <span>{errors?.ConfirmPwd?.message}</span>
+            </ErrorMessage>
+            <Button color="black">회원가입</Button>
           </LoginContainer>
         </form>
       </LoginWrapper>

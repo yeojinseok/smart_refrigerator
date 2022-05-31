@@ -59,17 +59,9 @@ export function PwdInput({
 
   return (
     <>
-      <InputContainer
-        {...register('Email')}
-        ref={refs}
-        transition={{ type: 'tween' }}
-        whileHover="hover"
-      >
+      <InputContainer transition={{ type: 'tween' }} whileHover="hover">
         <input
-          onFocus={onFocus}
-          onBlur={onBlur}
-          onChange={onChange}
-          value={value}
+          {...register}
           placeholder={placeholder}
           type={passwordType.type}
         />
@@ -92,22 +84,12 @@ export function CunstomInput({
   value,
   placeholder,
   onBlur,
+  register,
 }: InputInterface) {
   return (
     <>
-      <InputContainer
-        ref={refs}
-        transition={{ type: 'tween' }}
-        whileHover="hover"
-      >
-        <input
-          onFocus={onFocus}
-          onBlur={onBlur}
-          onChange={onChange}
-          value={value}
-          placeholder={placeholder}
-          type="text"
-        />
+      <InputContainer transition={{ type: 'tween' }} whileHover="hover">
+        <input {...register} placeholder={placeholder} type="text" />
       </InputContainer>
     </>
   )
